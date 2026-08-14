@@ -20,6 +20,22 @@
                 </template>
             </div>
 
+            <p class="qb-filter-title">정답 유형 필터 (선택 안 하면 전체에서 랜덤)</p>
+            <div class="qb-filter-options">
+                <lightning-input
+                    type="checkbox"
+                    label="단일 정답 문제만"
+                    checked={filterSingle}
+                    onchange={handleToggleSingle}>
+                </lightning-input>
+                <lightning-input
+                    type="checkbox"
+                    label="다수 정답 문제만"
+                    checked={filterMultiple}
+                    onchange={handleToggleMultiple}>
+                </lightning-input>
+            </div>
+
             <div class="qb-count-actions">
                 <lightning-button label="시작하기" variant="brand" disabled={isStartDisabled} onclick={handleStart}></lightning-button>
             </div>

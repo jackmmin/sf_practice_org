@@ -23,6 +23,7 @@ export default class QbQuizRunner extends LightningElement {
     @api certificationName;
     @api mode; // 'browse' | 'mock' | 'exam'
     @api questionCount; // only used for mock/exam
+    @api answerTypeFilter; // array of 'single' | 'multiple', only used for mock/exam
 
     isLoading = true;
     error;
@@ -33,6 +34,7 @@ export default class QbQuizRunner extends LightningElement {
     answersByQuestionId = {};
     revealedIds = new Set();
     isFinished = false;
+    isJumpOpen = false;
 
     @wire(getQuestions, { certificationId: '$certificationId' })
     wiredQuestions({ data, error }) {
@@ -47,7 +49,23 @@ export default class QbQuizRunner extends LightningElement {
     }
 
     buildRun() {
-        const shuffled = shuffle(this.rawData || []);
+        let pool = this.rawData || [];
+
+        if (this.mode !== 'browse' && this.answerTypeFilter && this.answerTypeFilter.length > 0) {
+            const wantSingle = this.answerTypeFilter.includes('single');
+            const wantMultiple = this.answerTypeFilter.includes('multiple');
+            if (wantSingle !== wantMultiple) {
+                pool = pool.filter((q) => {
+                    const keys = (q.Correct_Answer__c || '')
+                        .split(',')
+                        .map((s) => s.trim())
+                        .filter(Boolean);
+                    return wantMultiple ? keys.length > 1 : keys.length <= 1;
+                });
+            }
+        }
+
+        const shuffled = shuffle(pool);
         const limited =
             this.mode === 'browse' ? shuffled : shuffled.slice(0, this.questionCount || shuffled.length);
         this.runQuestions = limited.map((q, idx) => this.formatQuestion(q, idx));
@@ -55,6 +73,7 @@ export default class QbQuizRunner extends LightningElement {
         this.answersByQuestionId = {};
         this.revealedIds = new Set();
         this.isFinished = false;
+        this.isJumpOpen = false;
     }
 
     formatQuestion(q, idx) {
@@ -120,10 +139,6 @@ export default class QbQuizRunner extends LightningElement {
         return `${this.currentIndex + 1} / ${this.totalCount}`;
     }
 
-    get currentIndexString() {
-        return String(this.currentIndex);
-    }
-
     get isFirst() {
         return this.currentIndex <= 0;
     }
@@ -151,18 +166,31 @@ export default class QbQuizRunner extends LightningElement {
         if (!this.isMockOrExam || !this.isEndDisabled) {
             return '';
         }
-        return `아직 풀지 않은 문제가 ${this.totalCount - this.answeredCount}개 있습니다.`;
+        return `${this.totalCount - this.answeredCount}문제 남음`;
     }
 
     get questionOptions() {
         return this.runQuestions.map((q, idx) => {
             const answered = (this.answersByQuestionId[q.id] || []).length > 0;
-            const marker = this.isMockOrExam && answered ? '✓ ' : '';
+            const showAnswered = this.isMockOrExam && answered;
+            let itemClass = 'qb-jump-item';
+            if (idx === this.currentIndex) {
+                itemClass += ' qb-jump-item-current';
+            }
+            if (showAnswered) {
+                itemClass += ' qb-jump-item-answered';
+            }
             return {
-                label: `${marker}${idx + 1}번`,
-                value: String(idx)
+                value: String(idx),
+                number: idx + 1,
+                showAnswered,
+                itemClass
             };
         });
+    }
+
+    get jumpPanelClass() {
+        return this.isJumpOpen ? 'qb-jump-panel qb-jump-panel-open' : 'qb-jump-panel';
     }
 
     get score() {
@@ -192,22 +220,35 @@ export default class QbQuizRunner extends LightningElement {
     }
 
     handlePrev() {
+        this.isJumpOpen = false;
         if (!this.isFirst) {
             this.currentIndex -= 1;
         }
     }
 
     handleNext() {
+        this.isJumpOpen = false;
         if (!this.isLast) {
             this.currentIndex += 1;
         }
     }
 
-    handleJump(event) {
-        this.currentIndex = parseInt(event.detail.value, 10);
+    handleToggleJump() {
+        this.isJumpOpen = !this.isJumpOpen;
+    }
+
+    handleCloseJump() {
+        this.isJumpOpen = false;
+    }
+
+    handleJumpSelect(event) {
+        const idx = parseInt(event.currentTarget.dataset.index, 10);
+        this.currentIndex = idx;
+        this.isJumpOpen = false;
     }
 
     handleCheckAnswer() {
+        this.isJumpOpen = false;
         const q = this.runQuestions[this.currentIndex];
         const next = new Set(this.revealedIds);
         next.add(q.id);
@@ -215,6 +256,7 @@ export default class QbQuizRunner extends LightningElement {
     }
 
     handleEnd() {
+        this.isJumpOpen = false;
         if (this.isEndDisabled) {
             return;
         }

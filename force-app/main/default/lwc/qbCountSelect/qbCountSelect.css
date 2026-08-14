@@ -50,6 +50,19 @@
     color: #1589ee;
 }
 
+.qb-filter-title {
+    font-size: 0.78rem;
+    color: #5c5c5c;
+    margin: 0.25rem 0 0.5rem 0;
+}
+
+.qb-filter-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-bottom: 1.25rem;
+}
+
 .qb-count-actions {
     display: flex;
     justify-content: flex-end;

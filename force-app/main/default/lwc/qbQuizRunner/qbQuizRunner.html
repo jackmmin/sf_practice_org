@@ -40,24 +40,55 @@
                 </div>
 
                 <div class="qb-runner-footer">
-                    <div class="qb-footer-nav">
-                        <lightning-button label="이전" disabled={isFirst} onclick={handlePrev}></lightning-button>
-                        <lightning-combobox
-                            variant="label-hidden"
-                            options={questionOptions}
-                            value={currentIndexString}
-                            onchange={handleJump}
-                            class="qb-footer-picklist">
-                        </lightning-combobox>
-                        <lightning-button label="다음" disabled={isLast} onclick={handleNext}></lightning-button>
-                    </div>
-                    <div class="qb-footer-actions">
-                        <lightning-button label="정답확인" onclick={handleCheckAnswer}></lightning-button>
-                        <lightning-button label={endLabel} variant="brand" disabled={isEndDisabled} onclick={handleEnd}></lightning-button>
-                    </div>
                     <template if:true={endHint}>
                         <p class="qb-end-hint">{endHint}</p>
                     </template>
+
+                    <div class="qb-footer-row">
+                        <lightning-button-icon
+                            icon-name="utility:chevronleft"
+                            alternative-text="이전 문제"
+                            variant="border-filled"
+                            size="small"
+                            disabled={isFirst}
+                            onclick={handlePrev}>
+                        </lightning-button-icon>
+
+                        <div class="qb-jump-wrapper">
+                            <template if:true={isJumpOpen}>
+                                <div class="qb-jump-backdrop" onclick={handleCloseJump}></div>
+                            </template>
+                            <button class="qb-jump-trigger" onclick={handleToggleJump}>{progressLabel}</button>
+                            <div class={jumpPanelClass}>
+                                <template for:each={questionOptions} for:item="opt">
+                                    <button
+                                        key={opt.value}
+                                        class={opt.itemClass}
+                                        data-index={opt.value}
+                                        onclick={handleJumpSelect}>
+                                        {opt.number}
+                                        <template if:true={opt.showAnswered}>
+                                            <span class="qb-jump-check">✓</span>
+                                        </template>
+                                    </button>
+                                </template>
+                            </div>
+                        </div>
+
+                        <lightning-button-icon
+                            icon-name="utility:chevronright"
+                            alternative-text="다음 문제"
+                            variant="border-filled"
+                            size="small"
+                            disabled={isLast}
+                            onclick={handleNext}>
+                        </lightning-button-icon>
+                    </div>
+
+                    <div class="qb-footer-row qb-footer-actions">
+                        <button class="qb-action-btn" onclick={handleCheckAnswer}>정답확인</button>
+                        <button class="qb-action-btn qb-action-end" disabled={isEndDisabled} onclick={handleEnd}>{endLabel}</button>
+                    </div>
                 </div>
             </template>
         </template>

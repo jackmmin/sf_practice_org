@@ -7,6 +7,8 @@ export default class QbCountSelect extends LightningElement {
     @api totalCount;
 
     count;
+    filterSingle = false;
+    filterMultiple = false;
 
     connectedCallback() {
         this.count = this.defaultCount;
@@ -45,10 +47,29 @@ export default class QbCountSelect extends LightningElement {
         this.count = value;
     }
 
+    handleToggleSingle(event) {
+        this.filterSingle = event.target.checked;
+    }
+
+    handleToggleMultiple(event) {
+        this.filterMultiple = event.target.checked;
+    }
+
     handleStart() {
         if (this.isStartDisabled) {
             return;
         }
-        this.dispatchEvent(new CustomEvent('start', { detail: { count: this.count } }));
+        const answerTypeFilter = [];
+        if (this.filterSingle) {
+            answerTypeFilter.push('single');
+        }
+        if (this.filterMultiple) {
+            answerTypeFilter.push('multiple');
+        }
+        this.dispatchEvent(
+            new CustomEvent('start', {
+                detail: { count: this.count, answerTypeFilter }
+            })
+        );
     }
 }
