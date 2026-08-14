@@ -32,10 +32,12 @@
             </template>
 
             <template if:true={isBrowseStep}>
-                <c-qb-question-browser
+                <c-qb-quiz-runner
+                    mode="browse"
                     certification-id={selectedCertificationId}
-                    certification-name={selectedCertificationName}>
-                </c-qb-question-browser>
+                    certification-name={selectedCertificationName}
+                    onback={handleBack}>
+                </c-qb-quiz-runner>
             </template>
 
             <template if:true={isCountStep}>
@@ -46,6 +48,16 @@
                     total-count={selectedTotalCount}
                     onstart={handleStart}>
                 </c-qb-count-select>
+            </template>
+
+            <template if:true={isQuizStep}>
+                <c-qb-quiz-runner
+                    mode={selectedMode}
+                    certification-id={selectedCertificationId}
+                    certification-name={selectedCertificationName}
+                    question-count={selectedCount}
+                    onback={handleBack}>
+                </c-qb-quiz-runner>
             </template>
         </div>
     </div>

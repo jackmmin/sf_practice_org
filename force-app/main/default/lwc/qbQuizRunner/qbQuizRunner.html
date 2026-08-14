@@ -1,0 +1,78 @@
+<template>
+    <div class="qb-runner">
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="문제를 불러오는 중"></lightning-spinner>
+        </template>
+
+        <template if:true={error}>
+            <div class="slds-text-color_error">문제를 불러오지 못했습니다.</div>
+        </template>
+
+        <template if:false={isFinished}>
+            <template if:true={currentQuestion}>
+                <div class="qb-runner-body">
+                    <div class="qb-progress-bar">
+                        <span class="qb-progress-label">{progressLabel}</span>
+                        <template if:true={currentQuestion.topic}>
+                            <lightning-badge label={currentQuestion.topic}></lightning-badge>
+                        </template>
+                    </div>
+
+                    <p class="qb-run-question-text">{currentQuestion.text}</p>
+
+                    <ul class="qb-run-options">
+                        <template for:each={currentQuestion.options} for:item="opt">
+                            <li key={opt.key} class={opt.optionClass} data-key={opt.key} onclick={handleSelectOption}>
+                                <span class="qb-run-option-key">{opt.key}</span>
+                                <span class="qb-run-option-label">{opt.label}</span>
+                            </li>
+                        </template>
+                    </ul>
+
+                    <template if:true={currentQuestion.isRevealed}>
+                        <div class="qb-run-answer-block">
+                            <p class="qb-run-answer-line"><strong>정답:</strong> {currentQuestion.correctAnswer}</p>
+                            <template if:true={currentQuestion.explanation}>
+                                <p class="qb-run-explanation">{currentQuestion.explanation}</p>
+                            </template>
+                        </div>
+                    </template>
+                </div>
+
+                <div class="qb-runner-footer">
+                    <div class="qb-footer-nav">
+                        <lightning-button label="이전" disabled={isFirst} onclick={handlePrev}></lightning-button>
+                        <lightning-combobox
+                            variant="label-hidden"
+                            options={questionOptions}
+                            value={currentIndexString}
+                            onchange={handleJump}
+                            class="qb-footer-picklist">
+                        </lightning-combobox>
+                        <lightning-button label="다음" disabled={isLast} onclick={handleNext}></lightning-button>
+                    </div>
+                    <div class="qb-footer-actions">
+                        <lightning-button label="정답확인" onclick={handleCheckAnswer}></lightning-button>
+                        <lightning-button label={endLabel} variant="brand" disabled={isEndDisabled} onclick={handleEnd}></lightning-button>
+                    </div>
+                    <template if:true={endHint}>
+                        <p class="qb-end-hint">{endHint}</p>
+                    </template>
+                </div>
+            </template>
+        </template>
+
+        <template if:true={isFinished}>
+            <div class="qb-finish-panel">
+                <h2 class="qb-finish-title">{endLabel} 완료</h2>
+                <template if:true={isMockOrExam}>
+                    <p class="qb-finish-score">{score.correct} / {score.total} 정답</p>
+                </template>
+                <div class="qb-finish-actions">
+                    <lightning-button label="다시 풀기" onclick={handleRestart}></lightning-button>
+                    <lightning-button label="목록으로" variant="brand" onclick={handleBack}></lightning-button>
+                </div>
+            </div>
+        </template>
+    </div>
+</template>
