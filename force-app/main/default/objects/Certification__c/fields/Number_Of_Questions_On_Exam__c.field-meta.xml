@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Number_Of_Questions_On_Exam__c</fullName>
+    <label>Number of Questions on Exam</label>
+    <precision>4</precision>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <description>Official number of questions presented in a real exam attempt, distinct from the total size of the practice question bank.</description>
+</CustomField>

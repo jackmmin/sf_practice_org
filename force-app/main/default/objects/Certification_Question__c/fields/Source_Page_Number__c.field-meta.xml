@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Source_Page_Number__c</fullName>
+    <label>Source Page Number</label>
+    <precision>6</precision>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <description>Page number in the original source document where this question appeared, for traceability.</description>
+</CustomField>

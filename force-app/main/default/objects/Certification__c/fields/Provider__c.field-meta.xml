@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Provider__c</fullName>
+    <label>Provider</label>
+    <required>true</required>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>false</restricted>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value><fullName>Salesforce</fullName><default>false</default><label>Salesforce</label></value>
+            <value><fullName>Slack</fullName><default>false</default><label>Slack</label></value>
+            <value><fullName>AWS</fullName><default>false</default><label>AWS</label></value>
+            <value><fullName>Microsoft</fullName><default>false</default><label>Microsoft</label></value>
+            <value><fullName>Google</fullName><default>false</default><label>Google</label></value>
+            <value><fullName>Other</fullName><default>false</default><label>Other</label></value>
+        </valueSetDefinition>
+    </valueSet>
+    <description>Vendor or organization issuing the certification. Non-restricted picklist so new providers can be added without a metadata deploy.</description>
+</CustomField>

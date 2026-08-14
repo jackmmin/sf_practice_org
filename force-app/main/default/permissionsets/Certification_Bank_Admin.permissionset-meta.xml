@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Certification Bank Admin</label>
+    <description>Full create/read/edit/delete access to the Certification question bank objects (Certification and Certification Question), for admins who maintain the multi-certification exam content library.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+
+    <objectPermissions>
+        <object>Certification__c</object>
+        <allowCreate>true</allowCreate>
+        <allowRead>true</allowRead>
+        <allowEdit>true</allowEdit>
+        <allowDelete>true</allowDelete>
+        <viewAllRecords>true</viewAllRecords>
+        <modifyAllRecords>true</modifyAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <object>Certification_Question__c</object>
+        <allowCreate>true</allowCreate>
+        <allowRead>true</allowRead>
+        <allowEdit>true</allowEdit>
+        <allowDelete>true</allowDelete>
+        <viewAllRecords>true</viewAllRecords>
+        <modifyAllRecords>true</modifyAllRecords>
+    </objectPermissions>
+
+    <fieldPermissions><field>Certification__c.Exam_Code__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Certification__c.Version__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Certification__c.Level__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Certification__c.Category__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Certification__c.Certification_Language__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Certification__c.Passing_Score_Percent__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Certification__c.Exam_Duration_Minutes__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Certification__c.Number_Of_Questions_On_Exam__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Certification__c.Vendor_Website_URL__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Certification__c.Description__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Certification__c.Source_Document_Name__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Certification__c.Last_Synced_Date__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Certification__c.Total_Question_Count__c</field><readable>true</readable><editable>false</editable></fieldPermissions>
+
+    <fieldPermissions><field>Certification_Question__c.Question_Number__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Certification_Question__c.Question_Text__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Certification_Question__c.Question_Text_Translated__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Certification_Question__c.Option_A__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Certification_Question__c.Option_B__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Certification_Question__c.Option_C__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Certification_Question__c.Option_D__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Certification_Question__c.Option_E__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Certification_Question__c.Option_F__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Certification_Question__c.Explanation__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Certification_Question__c.Explanation_Translated__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Certification_Question__c.Topic__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Certification_Question__c.Difficulty__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Certification_Question__c.Question_Language__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Certification_Question__c.Source_Page_Number__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Certification_Question__c.External_Source_Reference__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+</PermissionSet>

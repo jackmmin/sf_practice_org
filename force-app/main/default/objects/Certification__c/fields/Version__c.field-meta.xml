@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Version__c</fullName>
+    <label>Version</label>
+    <length>20</length>
+    <trackHistory>true</trackHistory>
+    <type>Text</type>
+    <description>Exam or question-bank version string, e.g. 20.0.</description>
+</CustomField>

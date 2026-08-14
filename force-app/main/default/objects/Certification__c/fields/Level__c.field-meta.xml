@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Level__c</fullName>
+    <label>Level</label>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>false</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value><fullName>Foundational</fullName><default>false</default><label>Foundational</label></value>
+            <value><fullName>Associate</fullName><default>false</default><label>Associate</label></value>
+            <value><fullName>Professional</fullName><default>true</default><label>Professional</label></value>
+            <value><fullName>Expert</fullName><default>false</default><label>Expert</label></value>
+            <value><fullName>Specialist</fullName><default>false</default><label>Specialist</label></value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

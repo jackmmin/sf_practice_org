@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>External_Source_Reference__c</fullName>
+    <label>External Source Reference</label>
+    <length>255</length>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <description>Free-text reference to the original source, e.g. file name plus page, for audit purposes.</description>
+</CustomField>

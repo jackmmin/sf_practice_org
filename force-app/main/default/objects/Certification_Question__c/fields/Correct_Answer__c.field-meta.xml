@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Correct_Answer__c</fullName>
+    <label>Correct Answer</label>
+    <length>40</length>
+    <required>true</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <description>Correct option letter(s), e.g. D or A,B,C for multi-select questions. For True/False questions use True or False.</description>
+</CustomField>

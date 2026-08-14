@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Question_Number__c</fullName>
+    <label>Question Number</label>
+    <precision>6</precision>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <description>Sequential number of this question within its source document, e.g. NO.1, NO.2. Unique only in combination with Certification.</description>
+</CustomField>
