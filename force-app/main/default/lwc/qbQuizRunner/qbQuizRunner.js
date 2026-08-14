@@ -117,6 +117,7 @@ export default class QbQuizRunner extends LightningElement {
         return {
             ...q,
             isRevealed: revealed,
+            checkAnswerLabel: revealed ? '정답 숨기기' : '정답확인',
             options: q.options.map((opt) => {
                 const isSelected = selected.includes(opt.key);
                 const isCorrectOpt = q.correctKeys.includes(opt.key);
@@ -251,7 +252,11 @@ export default class QbQuizRunner extends LightningElement {
         this.isJumpOpen = false;
         const q = this.runQuestions[this.currentIndex];
         const next = new Set(this.revealedIds);
-        next.add(q.id);
+        if (next.has(q.id)) {
+            next.delete(q.id);
+        } else {
+            next.add(q.id);
+        }
         this.revealedIds = next;
     }
 

@@ -86,7 +86,7 @@
                     </div>
 
                     <div class="qb-footer-row qb-footer-actions">
-                        <button class="qb-action-btn" onclick={handleCheckAnswer}>정답확인</button>
+                        <button class="qb-action-btn" onclick={handleCheckAnswer}>{currentQuestion.checkAnswerLabel}</button>
                         <button class="qb-action-btn qb-action-end" disabled={isEndDisabled} onclick={handleEnd}>{endLabel}</button>
                     </div>
                 </div>
