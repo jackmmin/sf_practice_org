@@ -1,0 +1,68 @@
+<template>
+    <div class="qb-browser">
+        <div class="qb-browser-toolbar">
+            <lightning-input
+                type="search"
+                label="문제 검색"
+                variant="label-hidden"
+                placeholder="문제 번호나 키워드로 검색"
+                value={searchTerm}
+                onchange={handleSearch}
+                class="qb-search">
+            </lightning-input>
+        </div>
+
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="불러오는 중"></lightning-spinner>
+        </template>
+
+        <template if:true={error}>
+            <div class="slds-text-color_error">문제를 불러오지 못했습니다.</div>
+        </template>
+
+        <template if:true={hasNoResults}>
+            <div class="slds-text-color_weak">검색 결과가 없습니다.</div>
+        </template>
+
+        <template if:true={hasQuestions}>
+            <p class="qb-page-info">{pageInfo}</p>
+
+            <template for:each={pagedQuestions} for:item="q">
+                <div key={q.id} class="qb-question-card">
+                    <p class="qb-question-text">
+                        <span class="qb-question-number">Q{q.number}.</span> {q.text}
+                    </p>
+                    <template if:true={q.topic}>
+                        <lightning-badge label={q.topic} class="qb-topic-badge"></lightning-badge>
+                    </template>
+
+                    <ul class="qb-options">
+                        <template for:each={q.options} for:item="opt">
+                            <li key={opt.key} class={opt.optionClass}>
+                                <span class="qb-option-key">{opt.key}.</span>
+                                <span class="qb-option-label">{opt.label}</span>
+                            </li>
+                        </template>
+                    </ul>
+
+                    <button class="qb-toggle-btn" data-id={q.id} onclick={handleToggle}>{q.toggleLabel}</button>
+
+                    <template if:true={q.isExpanded}>
+                        <div class="qb-answer-block">
+                            <p class="qb-answer-line"><strong>정답:</strong> {q.correctAnswer}</p>
+                            <template if:true={q.explanation}>
+                                <p class="qb-explanation">{q.explanation}</p>
+                            </template>
+                        </div>
+                    </template>
+                </div>
+            </template>
+
+            <div class="qb-pagination">
+                <lightning-button label="이전" disabled={isFirstPage} onclick={handlePrev}></lightning-button>
+                <span class="qb-page-indicator">{currentPage} / {totalPages}</span>
+                <lightning-button label="다음" disabled={isLastPage} onclick={handleNext}></lightning-button>
+            </div>
+        </template>
+    </div>
+</template>

@@ -1,0 +1,31 @@
+<template>
+    <div class="qb-cert-select">
+        <p class="qb-intro">자격증을 선택하세요</p>
+
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="불러오는 중" size="small"></lightning-spinner>
+        </template>
+
+        <template if:true={error}>
+            <div class="slds-text-color_error">자격증 목록을 불러오지 못했습니다.</div>
+        </template>
+
+        <template if:true={hasNoCertifications}>
+            <div class="slds-text-color_weak">등록된 자격증이 없습니다.</div>
+        </template>
+
+        <template if:true={hasCertifications}>
+            <div class="slds-grid slds-wrap slds-gutters">
+                <template for:each={certifications} for:item="cert">
+                    <div key={cert.id} class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-p-around_x-small">
+                        <div class="qb-cert-card" data-id={cert.id} role="button" tabindex="0" onclick={handleSelect} onkeyup={handleKeyup}>
+                            <p class="qb-cert-name">{cert.name}</p>
+                            <p class="qb-cert-meta">{cert.provider} · {cert.category}</p>
+                            <p class="qb-cert-count">문제 {cert.totalCount}개</p>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </template>
+    </div>
+</template>

@@ -1,0 +1,70 @@
+.qb-count-select {
+    display: flex;
+    justify-content: center;
+}
+
+.qb-count-card {
+    width: 100%;
+    max-width: 420px;
+    border: 1px solid #dddbda;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    box-sizing: border-box;
+    background: #ffffff;
+}
+
+.qb-count-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin: 0 0 0.25rem 0;
+}
+
+.qb-count-subtitle {
+    font-size: 0.85rem;
+    color: #5c5c5c;
+    margin: 0 0 1rem 0;
+}
+
+.qb-count-input {
+    margin-bottom: 1rem;
+}
+
+.qb-quick-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.qb-quick-chip {
+    border: 1px solid #c9c9c9;
+    background: #f4f6f9;
+    border-radius: 1rem;
+    padding: 0.35rem 0.8rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.qb-quick-chip:hover {
+    border-color: #1589ee;
+    color: #1589ee;
+}
+
+.qb-count-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+@media (max-width: 480px) {
+    .qb-count-card {
+        padding: 1.1rem;
+    }
+
+    .qb-count-actions {
+        justify-content: stretch;
+    }
+
+    .qb-count-actions lightning-button {
+        width: 100%;
+    }
+}

@@ -1,0 +1,52 @@
+<template>
+    <div class="qb-app">
+        <div class="qb-header">
+            <div class="qb-header-left">
+                <template if:true={showBackButton}>
+                    <lightning-button-icon
+                        icon-name="utility:back"
+                        alternative-text="뒤로"
+                        variant="border-filled"
+                        onclick={handleBack}>
+                    </lightning-button-icon>
+                </template>
+                <div class="qb-title">
+                    <h1>문제은행</h1>
+                    <template if:true={breadcrumb}>
+                        <p class="qb-breadcrumb">{breadcrumb}</p>
+                    </template>
+                </div>
+            </div>
+            <template if:true={showBackButton}>
+                <lightning-button label="처음으로" icon-name="utility:home" onclick={handleHome}></lightning-button>
+            </template>
+        </div>
+
+        <div class="qb-body">
+            <template if:true={isModeStep}>
+                <c-qb-mode-select onmodeselect={handleModeSelect}></c-qb-mode-select>
+            </template>
+
+            <template if:true={isCertificationStep}>
+                <c-qb-cert-select onselect={handleCertificationSelect}></c-qb-cert-select>
+            </template>
+
+            <template if:true={isBrowseStep}>
+                <c-qb-question-browser
+                    certification-id={selectedCertificationId}
+                    certification-name={selectedCertificationName}>
+                </c-qb-question-browser>
+            </template>
+
+            <template if:true={isCountStep}>
+                <c-qb-count-select
+                    mode={selectedMode}
+                    certification-id={selectedCertificationId}
+                    certification-name={selectedCertificationName}
+                    total-count={selectedTotalCount}
+                    onstart={handleStart}>
+                </c-qb-count-select>
+            </template>
+        </div>
+    </div>
+</template>

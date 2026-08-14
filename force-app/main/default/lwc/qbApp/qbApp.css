@@ -1,0 +1,46 @@
+.qb-app {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0.75rem;
+    box-sizing: border-box;
+}
+
+.qb-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.qb-header-left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 0;
+}
+
+.qb-title h1 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.qb-breadcrumb {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #5c5c5c;
+}
+
+.qb-body {
+    width: 100%;
+}
+
+@media (max-width: 480px) {
+    .qb-title h1 {
+        font-size: 1.05rem;
+    }
+}

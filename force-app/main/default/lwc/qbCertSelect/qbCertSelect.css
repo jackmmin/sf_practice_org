@@ -1,0 +1,41 @@
+.qb-intro {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 0.75rem 0;
+}
+
+.qb-cert-card {
+    border: 1px solid #dddbda;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    cursor: pointer;
+    background: #ffffff;
+    transition: box-shadow 0.15s ease, border-color 0.15s ease;
+    box-sizing: border-box;
+}
+
+.qb-cert-card:hover,
+.qb-cert-card:focus {
+    border-color: #1589ee;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    outline: none;
+}
+
+.qb-cert-name {
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 0 0 0.25rem 0;
+}
+
+.qb-cert-meta {
+    font-size: 0.8rem;
+    color: #5c5c5c;
+    margin: 0 0 0.5rem 0;
+}
+
+.qb-cert-count {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #1589ee;
+    margin: 0;
+}

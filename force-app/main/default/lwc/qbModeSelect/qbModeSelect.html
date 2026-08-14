@@ -1,0 +1,22 @@
+<template>
+    <div class="qb-mode-select">
+        <p class="qb-intro">무엇을 진행할까요?</p>
+        <div class="slds-grid slds-wrap slds-gutters">
+            <template for:each={modes} for:item="mode">
+                <div key={mode.value} class="slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-around_x-small">
+                    <div
+                        class="qb-tile"
+                        data-mode={mode.value}
+                        role="button"
+                        tabindex="0"
+                        onclick={handleSelect}
+                        onkeyup={handleKeyup}>
+                        <lightning-icon icon-name={mode.icon} size="medium" class="qb-tile-icon"></lightning-icon>
+                        <h2 class="qb-tile-title">{mode.title}</h2>
+                        <p class="qb-tile-desc">{mode.description}</p>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>
+</template>

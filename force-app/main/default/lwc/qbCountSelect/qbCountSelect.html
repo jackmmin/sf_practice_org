@@ -1,0 +1,28 @@
+<template>
+    <div class="qb-count-select">
+        <div class="qb-count-card">
+            <p class="qb-count-title">{certificationName}</p>
+            <p class="qb-count-subtitle">{modeLabel} · 전체 {totalCount}문제 중 몇 문제를 풀까요?</p>
+
+            <lightning-input
+                type="number"
+                label="문항 수"
+                min="1"
+                max={totalCount}
+                value={count}
+                onchange={handleChange}
+                class="qb-count-input">
+            </lightning-input>
+
+            <div class="qb-quick-options">
+                <template for:each={quickOptions} for:item="opt">
+                    <button key={opt} class="qb-quick-chip" data-value={opt} onclick={handleQuickSelect}>{opt}문제</button>
+                </template>
+            </div>
+
+            <div class="qb-count-actions">
+                <lightning-button label="시작하기" variant="brand" disabled={isStartDisabled} onclick={handleStart}></lightning-button>
+            </div>
+        </div>
+    </div>
+</template>
