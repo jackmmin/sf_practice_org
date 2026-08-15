@@ -39,6 +39,41 @@
     width: 100%;
 }
 
+.qb-resume {
+    display: flex;
+    justify-content: center;
+}
+
+.qb-resume-card {
+    width: 100%;
+    max-width: 420px;
+    border: 1px solid #dddbda;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    box-sizing: border-box;
+    background: #ffffff;
+    text-align: center;
+}
+
+.qb-resume-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+}
+
+.qb-resume-desc {
+    font-size: 0.85rem;
+    color: #5c5c5c;
+    margin: 0 0 1.5rem 0;
+}
+
+.qb-resume-actions {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
 @media (max-width: 480px) {
     .qb-title h1 {
         font-size: 1.05rem;

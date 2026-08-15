@@ -87,7 +87,7 @@
         <template if:true={isFinished}>
             <div class="qb-finish-panel">
                 <h2 class="qb-finish-title">{endLabel} 완료</h2>
-                <template if:true={isMockOrExam}>
+                <template if:true={isMock}>
                     <p class="qb-finish-score">{score.correct} / {score.total} 정답</p>
                 </template>
                 <div class="qb-finish-actions">

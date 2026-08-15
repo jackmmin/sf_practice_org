@@ -2,12 +2,11 @@ import { LightningElement } from 'lwc';
 
 const MODE_LABELS = {
     browse: '문제 확인하기',
-    mock: '모의고사',
-    exam: '시험'
+    mock: '모의고사'
 };
 
 export default class QbApp extends LightningElement {
-    step = 'mode'; // mode | certification | browse | count | quiz
+    step = 'mode'; // mode | certification | browse | resume | count | quiz
 
     selectedMode;
     selectedCertificationId;
@@ -15,6 +14,7 @@ export default class QbApp extends LightningElement {
     selectedTotalCount;
     selectedCount;
     selectedAnswerTypeFilter = [];
+    resumeInfo;
 
     get isModeStep() {
         return this.step === 'mode';
@@ -26,6 +26,10 @@ export default class QbApp extends LightningElement {
 
     get isBrowseStep() {
         return this.step === 'browse';
+    }
+
+    get isResumeStep() {
+        return this.step === 'resume';
     }
 
     get isCountStep() {
@@ -55,6 +59,10 @@ export default class QbApp extends LightningElement {
         return parts.join(' / ');
     }
 
+    get progressKey() {
+        return `qb_progress::${this.selectedCertificationId}::mock`;
+    }
+
     handleModeSelect(event) {
         this.selectedMode = event.detail.mode;
         this.step = 'certification';
@@ -65,7 +73,49 @@ export default class QbApp extends LightningElement {
         this.selectedCertificationId = certificationId;
         this.selectedCertificationName = certificationName;
         this.selectedTotalCount = totalCount;
-        this.step = this.selectedMode === 'browse' ? 'browse' : 'count';
+
+        if (this.selectedMode === 'browse') {
+            this.step = 'browse';
+            return;
+        }
+
+        const saved = this.readSavedProgress();
+        if (saved) {
+            this.resumeInfo = {
+                answered: Object.keys(saved.answersByQuestionId || {}).length,
+                total: Array.isArray(saved.orderedQuestionIds) ? saved.orderedQuestionIds.length : 0
+            };
+            this.step = 'resume';
+        } else {
+            this.step = 'count';
+        }
+    }
+
+    readSavedProgress() {
+        try {
+            const raw = window.localStorage.getItem(this.progressKey);
+            return raw ? JSON.parse(raw) : null;
+        } catch (e) {
+            return null;
+        }
+    }
+
+    clearSavedProgress() {
+        try {
+            window.localStorage.removeItem(this.progressKey);
+        } catch (e) {
+            // ignore
+        }
+    }
+
+    handleResumeContinue() {
+        this.step = 'quiz';
+    }
+
+    handleResumeRestart() {
+        this.clearSavedProgress();
+        this.resumeInfo = undefined;
+        this.step = 'count';
     }
 
     handleStart(event) {
@@ -75,7 +125,12 @@ export default class QbApp extends LightningElement {
     }
 
     handleBack() {
-        if (this.step === 'browse' || this.step === 'count' || this.step === 'quiz') {
+        if (
+            this.step === 'browse' ||
+            this.step === 'resume' ||
+            this.step === 'count' ||
+            this.step === 'quiz'
+        ) {
             this.step = 'certification';
         } else if (this.step === 'certification') {
             this.step = 'mode';
@@ -91,5 +146,6 @@ export default class QbApp extends LightningElement {
         this.selectedTotalCount = undefined;
         this.selectedCount = undefined;
         this.selectedAnswerTypeFilter = [];
+        this.resumeInfo = undefined;
     }
 }

@@ -1,7 +1,7 @@
 import { LightningElement, api } from 'lwc';
 
 export default class QbCountSelect extends LightningElement {
-    @api mode; // 'mock' | 'exam'
+    @api mode; // 'mock'
     @api certificationId;
     @api certificationName;
     @api totalCount;
@@ -23,7 +23,7 @@ export default class QbCountSelect extends LightningElement {
     }
 
     get modeLabel() {
-        return this.mode === 'exam' ? '시험' : '모의고사';
+        return '모의고사';
     }
 
     get quickOptions() {

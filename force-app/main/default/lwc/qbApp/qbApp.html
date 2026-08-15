@@ -40,6 +40,19 @@
                 </c-qb-quiz-runner>
             </template>
 
+            <template if:true={isResumeStep}>
+                <div class="qb-resume">
+                    <div class="qb-resume-card">
+                        <p class="qb-resume-title">이전에 풀던 모의고사가 있습니다</p>
+                        <p class="qb-resume-desc">{selectedCertificationName} · {resumeInfo.answered} / {resumeInfo.total}문제 응답 완료</p>
+                        <div class="qb-resume-actions">
+                            <lightning-button label="새로 시작" onclick={handleResumeRestart}></lightning-button>
+                            <lightning-button label="이어서 진행" variant="brand" onclick={handleResumeContinue}></lightning-button>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
             <template if:true={isCountStep}>
                 <c-qb-count-select
                     mode={selectedMode}

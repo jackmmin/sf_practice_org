@@ -11,14 +11,8 @@ export default class QbModeSelect extends LightningElement {
         {
             value: 'mock',
             title: '모의고사',
-            description: '원하는 문항 수를 골라 부담없이 연습합니다.',
+            description: '원하는 문항 수를 골라 연습합니다. 진행 중 기록은 이어서 풀 수 있습니다.',
             icon: 'utility:knowledge_base'
-        },
-        {
-            value: 'exam',
-            title: '시험',
-            description: '문항 수를 정해 실전처럼 응시합니다.',
-            icon: 'utility:trophy'
         }
     ];
 

@@ -14,16 +14,15 @@ function shuffle(list) {
 
 const END_LABEL = {
     browse: '학습 종료',
-    mock: '모의고사 종료',
-    exam: '시험 종료'
+    mock: '모의고사 종료'
 };
 
 export default class QbQuizRunner extends LightningElement {
     @api certificationId;
     @api certificationName;
-    @api mode; // 'browse' | 'mock' | 'exam'
-    @api questionCount; // only used for mock/exam
-    @api answerTypeFilter; // array of 'single' | 'multiple', only used for mock/exam
+    @api mode; // 'browse' | 'mock'
+    @api questionCount; // only used for mock
+    @api answerTypeFilter; // array of 'single' | 'multiple', only used for mock
 
     isLoading = true;
     error;
@@ -48,7 +47,74 @@ export default class QbQuizRunner extends LightningElement {
         }
     }
 
-    buildRun() {
+    // ---------- Progress persistence (mock mode only) ----------
+
+    get progressKey() {
+        return `qb_progress::${this.certificationId}::mock`;
+    }
+
+    readSavedProgress() {
+        try {
+            const raw = window.localStorage.getItem(this.progressKey);
+            return raw ? JSON.parse(raw) : null;
+        } catch (e) {
+            return null;
+        }
+    }
+
+    persistProgress() {
+        if (this.mode !== 'mock' || this.isFinished) {
+            return;
+        }
+        try {
+            const payload = {
+                questionCount: this.questionCount,
+                answerTypeFilter: this.answerTypeFilter,
+                orderedQuestionIds: this.runQuestions.map((q) => q.id),
+                answersByQuestionId: this.answersByQuestionId,
+                currentIndex: this.currentIndex,
+                savedAt: new Date().toISOString()
+            };
+            window.localStorage.setItem(this.progressKey, JSON.stringify(payload));
+        } catch (e) {
+            // storage unavailable/full - non-critical, ignore
+        }
+    }
+
+    clearSavedProgress() {
+        try {
+            window.localStorage.removeItem(this.progressKey);
+        } catch (e) {
+            // ignore
+        }
+    }
+
+    tryResume() {
+        const saved = this.readSavedProgress();
+        if (!saved || !Array.isArray(saved.orderedQuestionIds) || saved.orderedQuestionIds.length === 0) {
+            return false;
+        }
+        const byId = new Map((this.rawData || []).map((q) => [q.Id, q]));
+        const ordered = saved.orderedQuestionIds.map((id) => byId.get(id)).filter(Boolean);
+        if (ordered.length === 0) {
+            return false;
+        }
+        this.runQuestions = ordered.map((q, idx) => this.formatQuestion(q, idx));
+        this.answersByQuestionId = saved.answersByQuestionId || {};
+        this.currentIndex = Math.min(saved.currentIndex || 0, this.runQuestions.length - 1);
+        this.revealedIds = new Set();
+        this.isFinished = false;
+        this.isJumpOpen = false;
+        return true;
+    }
+
+    // ---------- Run building ----------
+
+    buildRun(forceFresh) {
+        if (!forceFresh && this.mode === 'mock' && this.tryResume()) {
+            return;
+        }
+
         let pool = this.rawData || [];
 
         if (this.mode !== 'browse' && this.answerTypeFilter && this.answerTypeFilter.length > 0) {
@@ -74,6 +140,7 @@ export default class QbQuizRunner extends LightningElement {
         this.revealedIds = new Set();
         this.isFinished = false;
         this.isJumpOpen = false;
+        this.persistProgress();
     }
 
     formatQuestion(q, idx) {
@@ -99,8 +166,8 @@ export default class QbQuizRunner extends LightningElement {
         };
     }
 
-    get isMockOrExam() {
-        return this.mode === 'mock' || this.mode === 'exam';
+    get isMock() {
+        return this.mode === 'mock';
     }
 
     get totalCount() {
@@ -157,14 +224,14 @@ export default class QbQuizRunner extends LightningElement {
     }
 
     get isEndDisabled() {
-        if (!this.isMockOrExam) {
+        if (!this.isMock) {
             return false;
         }
         return this.answeredCount < this.totalCount;
     }
 
     get endHint() {
-        if (!this.isMockOrExam || !this.isEndDisabled) {
+        if (!this.isMock || !this.isEndDisabled) {
             return '';
         }
         return `${this.totalCount - this.answeredCount}문제 남음`;
@@ -173,7 +240,7 @@ export default class QbQuizRunner extends LightningElement {
     get questionOptions() {
         return this.runQuestions.map((q, idx) => {
             const answered = (this.answersByQuestionId[q.id] || []).length > 0;
-            const showAnswered = this.isMockOrExam && answered;
+            const showAnswered = this.isMock && answered;
             let itemClass = 'qb-jump-item';
             if (idx === this.currentIndex) {
                 itemClass += ' qb-jump-item-current';
@@ -218,12 +285,14 @@ export default class QbQuizRunner extends LightningElement {
         }
 
         this.answersByQuestionId = { ...this.answersByQuestionId, [q.id]: next };
+        this.persistProgress();
     }
 
     handlePrev() {
         this.isJumpOpen = false;
         if (!this.isFirst) {
             this.currentIndex -= 1;
+            this.persistProgress();
         }
     }
 
@@ -231,6 +300,7 @@ export default class QbQuizRunner extends LightningElement {
         this.isJumpOpen = false;
         if (!this.isLast) {
             this.currentIndex += 1;
+            this.persistProgress();
         }
     }
 
@@ -246,6 +316,7 @@ export default class QbQuizRunner extends LightningElement {
         const idx = parseInt(event.currentTarget.dataset.index, 10);
         this.currentIndex = idx;
         this.isJumpOpen = false;
+        this.persistProgress();
     }
 
     handleCheckAnswer() {
@@ -266,10 +337,11 @@ export default class QbQuizRunner extends LightningElement {
             return;
         }
         this.isFinished = true;
+        this.clearSavedProgress();
     }
 
     handleRestart() {
-        this.buildRun();
+        this.buildRun(true);
     }
 
     handleBack() {
