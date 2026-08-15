@@ -28,15 +28,6 @@
                             </li>
                         </template>
                     </ul>
-
-                    <template if:true={currentQuestion.isRevealed}>
-                        <div class="qb-run-answer-block">
-                            <p class="qb-run-answer-line"><strong>정답:</strong> {currentQuestion.correctAnswer}</p>
-                            <template if:true={currentQuestion.explanation}>
-                                <p class="qb-run-explanation">{currentQuestion.explanation}</p>
-                            </template>
-                        </div>
-                    </template>
                 </div>
 
                 <div class="qb-runner-footer">

@@ -84,26 +84,6 @@
     color: #c23934;
 }
 
-.qb-run-answer-block {
-    margin-top: 0.5rem;
-    padding: 0.75rem;
-    background: #f4f6f9;
-    border-radius: 0.5rem;
-}
-
-.qb-run-answer-line {
-    margin: 0 0 0.35rem 0;
-    font-size: 0.9rem;
-}
-
-.qb-run-explanation {
-    margin: 0;
-    font-size: 0.85rem;
-    line-height: 1.4;
-    color: #444444;
-    white-space: pre-wrap;
-}
-
 /* ---------- Footer ---------- */
 
 .qb-runner-footer {
