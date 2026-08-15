@@ -94,6 +94,30 @@
                     <lightning-button label="다시 풀기" onclick={handleRestart}></lightning-button>
                     <lightning-button label="목록으로" variant="brand" onclick={handleBack}></lightning-button>
                 </div>
+
+                <template if:true={hasWrongQuestions}>
+                    <div class="qb-wrong-review">
+                        <p class="qb-wrong-review-title">틀린 문제 ({wrongCount}개)</p>
+                        <template for:each={wrongQuestions} for:item="q">
+                            <div key={q.id} class="qb-wrong-card">
+                                <p class="qb-run-question-text">
+                                    <span class="qb-wrong-number">Q{q.number}.</span> {q.text}
+                                </p>
+                                <template if:true={q.topic}>
+                                    <lightning-badge label={q.topic}></lightning-badge>
+                                </template>
+                                <ul class="qb-run-options">
+                                    <template for:each={q.options} for:item="opt">
+                                        <li key={opt.key} class={opt.optionClass}>
+                                            <span class="qb-run-option-key">{opt.key}</span>
+                                            <span class="qb-run-option-label">{opt.label}</span>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </div>
+                        </template>
+                    </div>
+                </template>
             </div>
         </template>
     </div>

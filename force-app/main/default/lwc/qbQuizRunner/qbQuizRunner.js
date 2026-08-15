@@ -262,12 +262,51 @@ export default class QbQuizRunner extends LightningElement {
     }
 
     get score() {
-        const correct = this.runQuestions.filter((q) => {
-            const selected = (this.answersByQuestionId[q.id] || []).slice().sort();
-            const correctKeys = q.correctKeys.slice().sort();
-            return selected.length > 0 && JSON.stringify(selected) === JSON.stringify(correctKeys);
-        }).length;
+        const correct = this.runQuestions.filter((q) => this.isQuestionCorrect(q)).length;
         return { correct, total: this.totalCount };
+    }
+
+    isQuestionCorrect(q) {
+        const selected = (this.answersByQuestionId[q.id] || []).slice().sort();
+        const correctKeys = q.correctKeys.slice().sort();
+        return selected.length > 0 && JSON.stringify(selected) === JSON.stringify(correctKeys);
+    }
+
+    get wrongQuestions() {
+        if (!this.isMock) {
+            return [];
+        }
+        return this.runQuestions
+            .filter((q) => !this.isQuestionCorrect(q))
+            .map((q) => {
+                const selected = this.answersByQuestionId[q.id] || [];
+                return {
+                    id: q.id,
+                    number: q.displayNumber,
+                    text: q.text,
+                    topic: q.topic,
+                    options: q.options.map((opt) => {
+                        const isSelected = selected.includes(opt.key);
+                        const isCorrectOpt = q.correctKeys.includes(opt.key);
+                        let optionClass = 'qb-run-option qb-run-option-static';
+                        if (isCorrectOpt) {
+                            optionClass += ' qb-run-option-correct';
+                        }
+                        if (isSelected && !isCorrectOpt) {
+                            optionClass += ' qb-run-option-incorrect';
+                        }
+                        return { ...opt, optionClass };
+                    })
+                };
+            });
+    }
+
+    get hasWrongQuestions() {
+        return this.wrongQuestions.length > 0;
+    }
+
+    get wrongCount() {
+        return this.wrongQuestions.length;
     }
 
     handleSelectOption(event) {

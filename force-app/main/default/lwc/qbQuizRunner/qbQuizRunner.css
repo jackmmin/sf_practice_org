@@ -274,6 +274,41 @@
     flex-wrap: wrap;
 }
 
+.qb-wrong-review {
+    text-align: left;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e5e5e5;
+}
+
+.qb-wrong-review-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #c23934;
+    margin: 0 0 1rem 0;
+}
+
+.qb-wrong-card {
+    border: 1px solid #dddbda;
+    border-radius: 0.6rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background: #ffffff;
+}
+
+.qb-wrong-number {
+    color: #c23934;
+    font-weight: 700;
+}
+
+.qb-run-option-static {
+    cursor: default;
+}
+
+.qb-run-option-static:hover {
+    border-color: #dddbda;
+}
+
 @media (max-width: 480px) {
     .qb-run-question-text {
         font-size: 1rem;
