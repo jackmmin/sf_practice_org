@@ -53,4 +53,6 @@
     <fieldPermissions><field>Certification_Question__c.Question_Language__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
     <fieldPermissions><field>Certification_Question__c.Source_Page_Number__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
     <fieldPermissions><field>Certification_Question__c.External_Source_Reference__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Certification_Question__c.Dump_Answer_Verified_Incorrect__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
+    <fieldPermissions><field>Certification_Question__c.Answer_Verification_Note__c</field><readable>true</readable><editable>true</editable></fieldPermissions>
 </PermissionSet>
