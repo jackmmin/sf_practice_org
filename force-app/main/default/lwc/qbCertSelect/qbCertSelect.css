@@ -4,6 +4,11 @@
     margin: 0 0 0.75rem 0;
 }
 
+.qb-show-answers-toggle {
+    display: block;
+    margin: 0 0 1rem 0;
+}
+
 .qb-cert-card {
     border: 1px solid #dddbda;
     border-radius: 0.75rem;

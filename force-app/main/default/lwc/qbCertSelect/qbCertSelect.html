@@ -2,6 +2,16 @@
     <div class="qb-cert-select">
         <p class="qb-intro">자격증을 선택하세요</p>
 
+        <template if:true={isBrowseMode}>
+            <lightning-input
+                type="checkbox"
+                label="정답 표시하고 시작 (켜두면 문제마다 정답이 바로 보입니다)"
+                checked={showAnswersByDefault}
+                onchange={handleToggleShowAnswers}
+                class="qb-show-answers-toggle">
+            </lightning-input>
+        </template>
+
         <template if:true={isLoading}>
             <lightning-spinner alternative-text="불러오는 중" size="small"></lightning-spinner>
         </template>

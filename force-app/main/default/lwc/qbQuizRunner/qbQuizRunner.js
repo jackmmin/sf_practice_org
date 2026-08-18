@@ -23,6 +23,7 @@ export default class QbQuizRunner extends LightningElement {
     @api mode; // 'browse' | 'mock'
     @api questionCount; // only used for mock
     @api answerTypeFilter; // array of 'single' | 'multiple', only used for mock
+    @api defaultRevealed = false; // only used for browse - show answers up front
 
     isLoading = true;
     error;
@@ -137,7 +138,10 @@ export default class QbQuizRunner extends LightningElement {
         this.runQuestions = limited.map((q, idx) => this.formatQuestion(q, idx));
         this.currentIndex = 0;
         this.answersByQuestionId = {};
-        this.revealedIds = new Set();
+        this.revealedIds =
+            this.mode === 'browse' && this.defaultRevealed
+                ? new Set(this.runQuestions.map((q) => q.id))
+                : new Set();
         this.isFinished = false;
         this.isJumpOpen = false;
         this.persistProgress();

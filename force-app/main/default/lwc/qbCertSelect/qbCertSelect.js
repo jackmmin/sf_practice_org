@@ -1,10 +1,13 @@
-import { LightningElement, wire } from 'lwc';
+import { LightningElement, api, wire } from 'lwc';
 import getCertifications from '@salesforce/apex/QuestionBankController.getCertifications';
 
 export default class QbCertSelect extends LightningElement {
+    @api mode; // 'browse' | 'mock'
+
     certifications;
     error;
     isLoading = true;
+    showAnswersByDefault = false;
 
     @wire(getCertifications)
     wiredCertifications({ data, error }) {
@@ -32,6 +35,14 @@ export default class QbCertSelect extends LightningElement {
         return !this.isLoading && !this.error && this.certifications && this.certifications.length === 0;
     }
 
+    get isBrowseMode() {
+        return this.mode === 'browse';
+    }
+
+    handleToggleShowAnswers(event) {
+        this.showAnswersByDefault = event.target.checked;
+    }
+
     handleSelect(event) {
         const certId = event.currentTarget.dataset.id;
         const cert = this.certifications.find((c) => c.id === certId);
@@ -43,7 +54,8 @@ export default class QbCertSelect extends LightningElement {
                 detail: {
                     certificationId: cert.id,
                     certificationName: cert.name,
-                    totalCount: cert.totalCount
+                    totalCount: cert.totalCount,
+                    showAnswersByDefault: this.showAnswersByDefault
                 }
             })
         );

@@ -28,7 +28,7 @@
             </template>
 
             <template if:true={isCertificationStep}>
-                <c-qb-cert-select onselect={handleCertificationSelect}></c-qb-cert-select>
+                <c-qb-cert-select mode={selectedMode} onselect={handleCertificationSelect}></c-qb-cert-select>
             </template>
 
             <template if:true={isBrowseStep}>
@@ -36,6 +36,7 @@
                     mode="browse"
                     certification-id={selectedCertificationId}
                     certification-name={selectedCertificationName}
+                    default-revealed={selectedShowAnswersByDefault}
                     onback={handleBack}>
                 </c-qb-quiz-runner>
             </template>

@@ -14,6 +14,7 @@ export default class QbApp extends LightningElement {
     selectedTotalCount;
     selectedCount;
     selectedAnswerTypeFilter = [];
+    selectedShowAnswersByDefault = false;
     resumeInfo;
 
     get isModeStep() {
@@ -69,10 +70,11 @@ export default class QbApp extends LightningElement {
     }
 
     handleCertificationSelect(event) {
-        const { certificationId, certificationName, totalCount } = event.detail;
+        const { certificationId, certificationName, totalCount, showAnswersByDefault } = event.detail;
         this.selectedCertificationId = certificationId;
         this.selectedCertificationName = certificationName;
         this.selectedTotalCount = totalCount;
+        this.selectedShowAnswersByDefault = !!showAnswersByDefault;
 
         if (this.selectedMode === 'browse') {
             this.step = 'browse';
@@ -146,6 +148,7 @@ export default class QbApp extends LightningElement {
         this.selectedTotalCount = undefined;
         this.selectedCount = undefined;
         this.selectedAnswerTypeFilter = [];
+        this.selectedShowAnswersByDefault = false;
         this.resumeInfo = undefined;
     }
 }
